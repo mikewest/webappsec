@@ -12,6 +12,7 @@ CSP-PINNING-FPWD: csp-pinning/published/2015-02-FPWD.html
 CSP2: CSP2/index.html
 CSP2-CR: CSP2/published/2015-02-CR.html
 CSP3: content-security-policy/index.html
+EPR: epr/index.html
 MIX: mixedcontent/index.html
 MIX-CR: mixedcontent/published/2015-02-CR.html
 POWER: powerfulfeatures/index.html
@@ -36,6 +37,9 @@ content-security-policy/index.html: content-security-policy/index.src.html bibli
 
 credentialmanagement/index.html: credentialmanagement/index.src.html biblio.json
 	bikeshed -f spec ./credentialmanagement/index.src.html
+
+epr/index.html: epr/index.src.html biblio.json
+	bikeshed -f spec ./epr/index.src.html
 
 mixedcontent/index.html: mixedcontent/index.src.html biblio.json
 	bikeshed -f spec ./mixedcontent/index.src.html
