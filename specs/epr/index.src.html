@@ -76,6 +76,9 @@ spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
       text: set up a worker environment settings object
     type: interface
       text: SharedWorker
+spec: html-design-principles; urlPrefix: http://www.w3.org/TR/html-design-principles/
+  type: dfn
+    text: Priority of Constituencies
 spec: MIX; urlPrefix: https://w3c.github.io/webappsec/specs/mixedcontent/
   type: dfn
     text: embedding document
@@ -279,7 +282,7 @@ spec: RFC7240; urlPrefix: https://tools.ietf.org/html/rfc7240
       store it persistently for use in regulating future requests.
     </li>
     <li>
-      Subsequent navigations and resource requests from <code>example.com</code>
+      Subsequent navigations and resource requests to <code>example.com</code>
       will run through [[#process-request]] to determine whether they <a>match</a>
       the ruleset defined in the <a>EPR manifest</a> we processed above.
 
@@ -479,6 +482,11 @@ spec: RFC7240; urlPrefix: https://tools.ietf.org/html/rfc7240
     <dt><dfn>block</dfn></dt>
     <dd>
       Cancel the request entirely, returning a <a>network error</a>.
+
+      ISSUE: Can we drop <code>block</code> since we've defined
+      <a>allowStrippedGET</a>? If not, can we add a requirement that the user
+      agent allow users to bypass the block (similar to mixed content
+      protections, which we allow users to loosen if they choose to).
     </dd>
     <dt><dfn>redirect</dfn></dt>
     <dd>
@@ -816,6 +824,60 @@ spec: RFC7240; urlPrefix: https://tools.ietf.org/html/rfc7240
     </li>
     <li>
       Return <code>Matches</code>.
+    </li>
+  </ol>
+</section>
+
+<!-- Big text: Implementation -->
+<section>
+  <h2 id="implementation-considerations">
+    Implementation Considerations
+  </h2>
+
+  <h3 id="poc">Priority of Constituencies</h3>
+
+  The HTML Design Principles [[html-design-principles]] notes that a key value
+  underlying the web platform's design is the <a>Priority of Constituencies</a>:
+
+  <blockquote>
+    In case of conflict, consider users over authors over implementors over
+    specifiers over theoretical purity
+  </blockquote>
+
+  As this specification aims to mitigate a number of risks to users by making it
+  difficult to deep-link into vulnerable bits of an application, it's well-worth
+  considering whether an implementation would violate this prioritization. Anne
+  van Kesteren, Eric Rescorla, Brian Smith, and others raised this issue in
+  <a href="https://groups.google.com/d/msg/mozilla.dev.platform/yEqC74IgnqQ/F_xZXbmhzxkJ">a
+  thread on mozilla.dev.platform</a>, and again
+  <a href="https://lists.w3.org/Archives/Public/public-webappsec/2015Feb/0260.html">on
+  public-webappsec</a>. The central claim in these threads is that the features
+  described in this specification would
+  "<a href="https://groups.google.com/d/msg/mozilla.dev.platform/yEqC74IgnqQ/qYY8SJ2UhQIJ">allow
+  a site to completely isolateitself from the rest of the web</a>",
+  thereby "<a href="https://groups.google.com/d/msg/mozilla.dev.platform/yEqC74IgnqQ/2l-rgnim1kAJ">serv[ing] the site more than the user</a>".
+  This criticism is reasonable, and we need to carefully consider the risks and
+  rewards that Entry Point Regulation presents.
+
+  
+  <ol>
+    <li>
+      This document does not uniquely grant site authors the power to restrict
+      incoming traffic from elsewhere on the web. Authors can (and do) use
+      server-side logic to validate and sanitize incoming requests based on the
+      same kinds of properties this specification relies upon
+      (<code>referer</code> and <code>origin</code> headers, for instance, are
+      widely used to control access to resorces through an analysis of a
+      request's origination point).
+
+      This specification is valuable to authors, as it makes such filtering
+      easier to deploy, and increases its reliability by providing a client-side
+      layer of defense to rest on top of the existing server-side filters.
+
+      Users, in turn 
+    </li>
+    <li>
+       
     </li>
   </ol>
 </section>

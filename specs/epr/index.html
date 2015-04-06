@@ -192,13 +192,19 @@ the ways in which resources may be fetched from an origin.</p>
     Does <var>request</var> match <var>rule</var>?
   </span></a>
      </ul>
-    <li><a href="#iana-considerations"><span class="secno">5</span> <span class="content">IANA Considerations</span></a>
+    <li><a href="#implementation-considerations"><span class="secno">5</span> <span class="content">
+    Implementation Considerations
+  </span></a>
      <ul class="toc">
-      <li><a href="#iana-https"><span class="secno">5.1</span> <span class="content">
+      <li><a href="#poc"><span class="secno">5.1</span> <span class="content">Priority of Constituencies</span></a>
+     </ul>
+    <li><a href="#iana-considerations"><span class="secno">6</span> <span class="content">IANA Considerations</span></a>
+     <ul class="toc">
+      <li><a href="#iana-https"><span class="secno">6.1</span> <span class="content">
     The <code>EPR</code> HTTP Request Header Field
   </span></a>
      </ul>
-    <li><a href="#acknowledgements"><span class="secno">6</span> <span class="content">Acknowledgements</span></a>
+    <li><a href="#acknowledgements"><span class="secno">7</span> <span class="content">Acknowledgements</span></a>
     <li><a href="#conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
      <ul class="toc">
       <li><a href="#conventions"><span class="secno"></span> <span class="content">Document conventions</span></a>
@@ -345,7 +351,7 @@ the ways in which resources may be fetched from an origin.</p>
      
     
      <li>
-      Subsequent navigations and resource requests from <code>example.com</code>
+      Subsequent navigations and resource requests to <code>example.com</code>
       will run through <a href="#process-request">§4.1 
     Process request
   </a> to determine whether they <a data-link-type="dfn" href="#match">match</a>
@@ -637,6 +643,13 @@ dictionary <dfn class="idl-code" data-dfn-type="dictionary" data-export="" data-
     
      <dd>
       Cancel the request entirely, returning a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-network-error">network error</a>.
+
+
+      <p class="issue" id="issue-29670128"><a class="self-link" href="#issue-29670128"></a>Can we drop <code>block</code> since we’ve defined
+      <a data-link-type="dfn" href="#allowstrippedget">allowStrippedGET</a>? If not, can we add a requirement that the user
+      agent allow users to bypass the block (similar to mixed content
+      protections, which we allow users to loosen if they choose to).</p>
+      
     
      
     
@@ -1189,65 +1202,86 @@ dictionary <dfn class="idl-code" data-dfn-type="dictionary" data-export="" data-
 
    <section>
   
-    <h2 class="heading settled" data-level="5" id="iana-considerations"><span class="secno">5. </span><span class="content">IANA Considerations</span><a class="self-link" href="#iana-considerations"></a></h2>
+    <h2 class="heading settled" data-level="5" id="implementation-considerations"><span class="secno">5. </span><span class="content">
+    Implementation Considerations
+  </span><a class="self-link" href="#implementation-considerations"></a></h2>
 
   
-    <h3 class="heading settled" data-level="5.1" id="iana-https"><span class="secno">5.1. </span><span class="content">
+    <h3 class="heading settled" data-level="5.1" id="poc"><span class="secno">5.1. </span><span class="content">Priority of Constituencies</span><a class="self-link" href="#poc"></a></h3>
+
+
+    <p>The HTML Design Principles <a data-link-type="biblio" href="#biblio-html-design-principles">[html-design-principles]</a> notes that a key value
+  underlying the web platform’s design is the <a data-link-type="dfn" href="http://www.w3.org/TR/html-design-principles/#priority-of-constituencies">Priority of Constituencies</a>:</p>
+
+  
+    <blockquote>
+    In case of conflict, consider users over authors over implementors over
+    specifiers over theoretical purity
+  </blockquote>
+
+
+
+    <section>
+  
+     <h2 class="heading settled" data-level="6" id="iana-considerations"><span class="secno">6. </span><span class="content">IANA Considerations</span><a class="self-link" href="#iana-considerations"></a></h2>
+
+  
+     <h3 class="heading settled" data-level="6.1" id="iana-https"><span class="secno">6.1. </span><span class="content">
     The <code>EPR</code> HTTP Request Header Field
   </span><a class="self-link" href="#iana-https"></a></h3>
   The permanent message header field registry should be updated with the
   following registration <a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a>:
 
   
-    <dl>
+     <dl>
     
-     <dt>Header field name
-     
+      <dt>Header field name
+      
     
-     <dd>EPR
-     
+      <dd>EPR
+      
 
     
-     <dt>Applicable protocol
-     
+      <dt>Applicable protocol
+      
     
-     <dd>http
-     
+      <dd>http
+      
 
     
-     <dt>Status
-     
+      <dt>Status
+      
     
-     <dd>standard
-     
+      <dd>standard
+      
 
     
-     <dt>Author/Change controller
-     
+      <dt>Author/Change controller
+      
     
-     <dd>W3C
-     
+      <dd>W3C
+      
 
     
-     <dt>Specification document
-     
+      <dt>Specification document
+      
     
-     <dd>This specification (See <a href="#epr-header">§3.1 The EPR HTTP Response Header Field</a>)
-     
+      <dd>This specification (See <a href="#epr-header">§3.1 The EPR HTTP Response Header Field</a>)
+      
   
-    </dl>
+     </dl>
 
 
 
-    <section>
+     <section>
   
-     <h2 class="heading settled" data-level="6" id="acknowledgements"><span class="secno">6. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
+      <h2 class="heading settled" data-level="7" id="acknowledgements"><span class="secno">7. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
 
 
-     <p>Awesome people are awesome.</p>
+      <p>Awesome people are awesome.</p>
 </section>
 
-</section></main>
+</section></section></main>
 
   <h2 class="no-ref no-num heading settled" id="conformance"><span class="content">Conformance</span><a class="self-link" href="#conformance"></a></h2>
 
@@ -1399,6 +1433,10 @@ dictionary <dfn class="idl-code" data-dfn-type="dictionary" data-export="" data-
     <ul>
      <li><a href="https://heycam.github.io/webidl/#idl-USVString">USVString</a>
      <li><a href="https://heycam.github.io/webidl/#idl-boolean">boolean</a>
+    </ul>
+   <li><a data-link-type="biblio" href="#biblio-html-design-principles">[html-design-principles]</a> defines the following terms:
+    <ul>
+     <li><a href="http://www.w3.org/TR/html-design-principles/#priority-of-constituencies">priority of constituencies</a>
     </ul></ul>
   <h2 class="no-num heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
@@ -1417,6 +1455,8 @@ dictionary <dfn class="idl-code" data-dfn-type="dictionary" data-export="" data-
    <dd>Anne van Kesteren; Sam Ruby. <a href="http://www.w3.org/TR/url">URL</a>. WD. URL: <a href="http://www.w3.org/TR/url">http://www.w3.org/TR/url</a>
    <dt id="biblio-webidl2"><a class="self-link" href="#biblio-webidl2"></a>[WEBIDL2]
    <dd>Cameron McCormack; Boris Zbarsky. <a href="https://heycam.github.io/webidl/">Web IDL (Second Edition)</a>. ED. URL: <a href="https://heycam.github.io/webidl/">https://heycam.github.io/webidl/</a>
+   <dt id="biblio-html-design-principles"><a class="self-link" href="#biblio-html-design-principles"></a>[HTML-DESIGN-PRINCIPLES]
+   <dd>Anne van Kesteren; Maciej Stachowiak. <a href="http://www.w3.org/TR/html-design-principles/">HTML Design Principles</a>. 26 November 2007. WD. URL: <a href="http://www.w3.org/TR/html-design-principles/">http://www.w3.org/TR/html-design-principles/</a>
    <dt id="biblio-html5"><a class="self-link" href="#biblio-html5"></a>[HTML5]
    <dd>Robin Berjon; et al. <a href="http://www.w3.org/TR/html5/">HTML5</a>. 28 October 2014. REC. URL: <a href="http://www.w3.org/TR/html5/">http://www.w3.org/TR/html5/</a>
    <dt id="biblio-rfc2119"><a class="self-link" href="#biblio-rfc2119"></a>[RFC2119]
@@ -1458,6 +1498,10 @@ dictionary <a data-global-name="" href="#dictdef-eprrule">EPRRule</a> {
   <h2 class="no-num heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
    <div class="issue">We need to define violation reports. Steal something from CSP.<a href="#issue-b412787b"> ↵ </a></div>
+   <div class="issue">Can we drop <code>block</code> since we’ve defined
+      <a data-link-type="dfn" href="#allowstrippedget">allowStrippedGET</a>? If not, can we add a requirement that the user
+      agent allow users to bypass the block (similar to mixed content
+      protections, which we allow users to loosen if they choose to).<a href="#issue-29670128"> ↵ </a></div>
    <div class="issue">How is this specified?<a href="#issue-ea6fca94"> ↵ </a></div>
    <div class="issue">Do we need a <code>connectionBehavior</code> property?<a href="#issue-52662b74"> ↵ </a></div>
    <div class="issue">No idea how this works. One URL for all failures? One URL per rule?<a href="#issue-e22784e4"> ↵ </a></div>
