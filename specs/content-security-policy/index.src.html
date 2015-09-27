@@ -1057,14 +1057,48 @@ spec: HTML; text: run a worker; url: https://html.spec.whatwg.org/multipage/work
 
   <h3 id="algorithms-fetch">Fetch Interface</h3>
 
-  This specification provides two algorithms which allow Fetch to make decisions
-  about whether or not a particular <a>request</a> should be blocked based on
-  its {{Request/client}}'s Content Security Policy [[!FETCH]]. The policy check
-  occurs twice: once at the top of Fetch, ensuring that outgoing requests
-  satisfy the relevant policy; and once at the bottom, ensuring that incoming
-  responses match as well (as they could have been modified in interesting ways
-  by an intermediate Service Worker). These algorithms can be considered the
-  public interface to the Content Security Policy specification:
+  This specification provides a parsing algorithm which should be executed to
+  populate a {{Response}}'s policy, and two algorithms which allow Fetch to make
+  decisions about whether or not a particular <a>request</a> should be blocked
+  based on its {{Request/client}}'s Content Security Policy [[!FETCH]]. The
+  policy check occurs twice: once at the top of Fetch, ensuring that outgoing
+  requests satisfy the relevant policy; and once at the bottom, ensuring that
+  incoming responses match as well (as they could have been modified in
+  interesting ways by an intermediate Service Worker). These algorithms can be
+  considered the public interface to the Content Security Policy specification:
+
+  <h4 id="policy-for-response">
+    Populate <var>response</var>'s Content Security Policy
+  </h4>
+
+  1.  If <var>response</var>'s <a>destination</a> is not one of "`document`",
+      "`serviceworker`", "`sharedworker`", or "`worker`", return without
+      modifying <var>response</var>.
+
+  2.  If <var>response</var>'s <a>header list</a> has a header whose name is
+      <a>`Content-Security-Policy`</a>:
+      1.  Let <var>policy to enforce</var> be the result of
+          <a lt="parse a header value">parsing</a>
+          <a><code>Content-Security-Policy</code></a> in <var>response</var>'s
+          <var>header list</var>.
+
+      2.  Set <var>response</var>'s `enforced Content Security Policy` to the
+          result of executing [[#parse-policy-string]] on <var>policy to
+          enforce</var>.
+
+  3.  If <var>response</var>'s <a>header list</a> has a header whose name is
+      <a>`Content-Security-Policy-Report-Only`</a>:
+
+      1.  Let <var>policy to enforce</var> be the result of
+          <a lt="parse a header value">parsing</a>
+          <a><code>Content-Security-Policy-Report-Only</code></a> in
+          <var>response</var>'s <var>header list</var>.
+
+      2.  Set <var>response</var>'s `monitored Content Security Policy` to the
+          result of executing [[#parse-policy-string]] on <var>policy to
+          enforce</var>.
+
+  ISSUE: Talk to Anne about adding CSP attributes to {{Response}} objects.
 
   <h4 id="should-block-request">
     Should <var>request</var> be blocked by Content Security Policy?
